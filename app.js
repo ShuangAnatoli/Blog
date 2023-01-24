@@ -70,15 +70,14 @@ app.post("/compose", function(req, res){
   
 });
 
-app.get("/posts/:postName", function(req, res){
-  var postName = _.lowerCase(req.params.postName);
-  posts.forEach(function(post){
-    var postTitle = _.lowerCase(post.title);
-    if (postName == postTitle){
-      console.log("Match Found!");
-      res.render("post", {postProperties: post}); 
-    }
-  })
+app.get("/posts/:postID", function(req, res){
+  var postID = req.params.postID;
+  Blog.findOne({_id: postID}, function(err, post){
+    res.render("post", {
+      post : post
+      });
+  });
+  
 });
 
 
